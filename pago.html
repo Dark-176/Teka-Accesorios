@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pago - Teka Accesorios</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff7f9;
+      padding: 20px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #e397af;
+      font-weight: normal;
+    }
+
+    h2 {
+      color: #e397af;
+    }
+
+    .resumen-compra, .formulario-pago {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .tarjeta-datos {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .btn-eliminar {
+      color: red;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .volver {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: #e397af;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    button {
+      margin-top: 15px;
+      background-color: #e397af;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d27797;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Teka<span>Accesorios</span></div>
+  </header>
+
+  <section class="resumen-compra">
+    <h2>Resumen de tu compra</h2>
+    <ul id="lista-pago"></ul>
+    <p id="total-pago"><strong>Total:</strong> $0 MXN</p>
+  </section>
+
+  <section class="formulario-pago">
+    <h2>Datos de Pago</h2>
+    <form id="form-pago">
+      <label>
+        Método de pago:
+        <select id="metodo-pago" required>
+          <option value="">Selecciona una opción</option>
+          <option value="tarjeta">💳 Tarjeta</option>
+          <option value="efectivo">💵 Efectivo</option>
+        </select>
+      </label>
+
+      <div class="tarjeta-datos" id="tarjeta-datos">
+        <label>Nombre completo: <input type="text" id="nombre" /></label>
+        <label>Número de tarjeta: <input type="text" maxlength="16" pattern="\d{16}" /></label>
+        <label>Fecha de expiración: <input type="month" /></label>
+        <label>CVV: <input type="text" maxlength="3" pattern="\d{3}" /></label>
+      </div>
+
+      <button type="submit">Finalizar pago</button>
+    </form>
+
+    <a href="index.html" class="volver">← Volver al catálogo</a>
+  </section>
+
+  <script>
+    const lista = document.getElementById("lista-pago");
+    const totalEl = document.getElementById("total-pago");
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function renderCarrito() {
+      lista.innerHTML = "";
+      let total = 0;
+
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `${item.nombre} - $${item.precio} MXN 
+          <span class="btn-eliminar" onclick="eliminarProducto(${index})">❌</span>`;
+        lista.appendChild(li);
+        total += item.precio;
+      });
+
+      totalEl.innerHTML = `<strong>Total:</strong> $${total} MXN`;
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      renderCarrito();
+    }
+
+    renderCarrito();
+
+    // Mostrar/ocultar campos de tarjeta
+    const metodoPago = document.getElementById("metodo-pago");
+    const tarjetaDatos = document.getElementById("tarjeta-datos");
+
+    metodoPago.addEventListener("change", () => {
+      if (metodoPago.value === "tarjeta") {
+        tarjetaDatos.style.display = "block";
+      } else {
+        tarjetaDatos.style.display = "none";
+      }
+    });
+
+    document.getElementById("form-pago").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre")?.value || "cliente";
+      alert(`¡Gracias por tu compra, ${nombre}! 💖 Tu pedido ha sido recibido.`);
+      localStorage.removeItem("carrito");
+      window.location.href = "index.html";
+    });
+  </script>
+
+   
+
+  
+</body>
+</html>
