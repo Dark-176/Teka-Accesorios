@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pago - Teka Accesorios</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff7f9;
+      padding: 20px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #e397af;
+      font-weight: normal;
+    }
+
+    h2 {
+      color: #e397af;
+    }
+
+    .resumen-compra, .formulario-pago {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .tarjeta-datos {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .btn-eliminar {
+      color: red;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .volver {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: #e397af;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    button {
+      margin-top: 15px;
+      background-color: #e397af;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d27797;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Teka<span>Accesorios</span></div>
+  </header>
+
+  <section class="resumen-compra">
+    <h2>Resumen de tu compra</h2>
+    <ul id="lista-pago"></ul>
+    <p id="total-pago"><strong>Total:</strong> $0 MXN</p>
+  </section>
+
+  <section class="formulario-pago">
+    <h2>Datos de Pago</h2>
+    <form id="form-pago">
+      <label>
+        Método de pago:
+        <select id="metodo-pago" required>
+          <option value="">Selecciona una opción</option>
+          <option value="tarjeta">💳 Tarjeta</option>
+          <option value="efectivo">💵 Efectivo</option>
+        </select>
+      </label>
+
+      <div class="tarjeta-datos" id="tarjeta-datos">
+        <label>Nombre completo: <input type="text" id="nombre" /></label>
+        <label>Número de tarjeta: <input type="text" maxlength="16" pattern="\d{16}" /></label>
+        <label>Fecha de expiración: <input type="month" /></label>
+        <label>CVV: <input type="text" maxlength="3" pattern="\d{3}" /></label>
+      </div>
+
+      <button type="submit">Finalizar pago</button>
+    </form>
+
+    <a href="index.html" class="volver">← Volver al catálogo</a>
+  </section>
+
+  <script>
+    const lista = document.getElementById("lista-pago");
+    const totalEl = document.getElementById("total-pago");
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function renderCarrito() {
+      lista.innerHTML = "";
+      let total = 0;
+
+      carrito.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `${item.nombre} - $${item.precio} MXN 
+          <span class="btn-eliminar" onclick="eliminarProducto(${index})">❌</span>`;
+        lista.appendChild(li);
+        total += item.precio;
+      });
+
+      totalEl.innerHTML = `<strong>Total:</strong> $${total} MXN`;
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      renderCarrito();
+    }
+
+    renderCarrito();
+
+    // Mostrar/ocultar campos de tarjeta
+    const metodoPago = document.getElementById("metodo-pago");
+    const tarjetaDatos = document.getElementById("tarjeta-datos");
+
+    metodoPago.addEventListener("change", () => {
+      if (metodoPago.value === "tarjeta") {
+        tarjetaDatos.style.display = "block";
+      } else {
+        tarjetaDatos.style.display = "none";
+      }
+    });
+
+    document.getElementById("form-pago").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre")?.value || "cliente";
+      alert(`¡Gracias por tu compra, ${nombre}! 💖 Tu pedido ha sido recibido.`);
+      localStorage.removeItem("carrito");
+      window.location.href = "index.html";
+    });
+  </script>
+
+   
+
+  
+</body>
+</html>
+
+
+
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fdf6f2;
+  color: #333;
+}
+
+/* Encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.logo span {
+  color: #e397af;
+  font-weight: normal;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #e397af;
+}
+
+.icons img {
+  width: 22px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+/* HERO SECTION */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 100px 5%;
+  min-height: 100vh;
+  background-image: url("img/joyas1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #fdf6f2;
+  position: relative;
+  text-align: left;
+}
+
+
+/* Contenido de texto */
+.texto {
+ .texto {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+}
+
+.texto h1 {
+  font-size: 48px;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+}
+
+.texto p {
+  font-size: 18px;
+  color: #555;
+}
+
+.texto p span {
+  color: #e397af;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+footer {
+  background-color: #fce8ee;
+  text-align: center;
+  padding: 30px 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.catalogo {
+  padding: 80px 5%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.catalogo h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #e397af;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.producto {
+  background-color: #fffafc;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  width: 240px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.producto:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.producto img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.producto h3 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.producto p {
+  color: #e397af;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.btn-carrito {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e397af;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-carrito:hover {
+  background-color: #d27797;
+  transform: scale(1.05);
+}
+
+.carrito {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #e397af;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  z-index: 100;
+}
+
+.carrito-icono {
+  position: relative;
+  display: inline-block;
+}
+
+#contador-carrito {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: pink;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.carrito-modal {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 2px solid pink;
+  padding: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index: 999;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.carrito-modal.oculto {
+  display: none;
+}
+
+.boton-pago {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: pink;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.boton-pago:hover {
+  background-color: hotpink;
+}
+
+.oculto {
+  display: none;
+}
+
+
+.resenas {
+  padding: 80px 5%;
+  background-color: #fff7f9;
+  text-align: center;
+}
+
+.resenas h2 {
+  font-size: 32px;
+  color: #e397af;
+  margin-bottom: 30px;
+}
+
+.opiniones blockquote {
+  font-style: italic;
+  color: #444;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 10px;
+}
+
+
+.redes-sociales {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.redes-sociales a {
+  margin: 0 8px;
+  color: #e397af;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.redes-sociales a:hover {
+  color: #b95c86;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .texto {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .galeria {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .producto {
+    width: 90%;
+  }
+
+  .formulario-pago form,
+  .resumen-compra {
+    padding: 10px;
+  }
+
+  input, select, button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  font-size: 28px;
+  padding: 12px 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teka Accesorios</title>
+
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="logo">Teka<span>Accesorios</span></div>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#resenas">Reseñas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        
+
+      </ul>
+    </nav>
+
+    <div class="icons" id="icono-carrito">
+      <img src="img/search-icon.png" alt="Buscar" />
+      <div class="carrito-icono"> 
+        <img src="img/cart-icon.png" alt="Carrito" />
+        <span id="contador-carrito">0</span>
+      </div>
+      <img src="img/user-icon.png" alt="Perfil" />
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="texto">
+      <h1>Bienvenidos</h1>
+      <p><span>TekaAccesorios</span><br />Encuentra accesorios únicos como tú</p>
+    </div>
+  </section>
+
+  <section class="catalogo" id="productos">
+    <h2>Catálogo</h2>
+    <div class="galeria">
+      <div class="producto">
+        <img src="img/joya1.jpg" alt="Collar Mariposa" />
+        <h3>Collar Mariposa</h3>
+        <p>$320 MXN</p>
+        <button onclick="agregarAlCarrito(0)">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="img/joya2.jpg" alt="Aros Doble Anillo" />
+        <h3>Aros Doble Anillo</h3>
+        <p>$270 MXN</p>
+        <button onclick="agregarAlCarrito(1)">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="img/joya3.jpg" alt="Pulsera Delicada" />
+        <h3>Pulsera Delicada</h3>
+        <p>$290 MXN</p>
+        <button onclick="agregarAlCarrito(2)">Agregar al carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="resenas" id="resenas">
+    <h2>Lo que dicen nuestras clientas</h2>
+    <div class="opiniones">
+      <blockquote>“Amé mi collar mariposa, la calidad es increíble ❤️”</blockquote>
+      <blockquote>“Entrega rápida y atención hermosa. Recomendadísimos.”</blockquote>
+    </div>
+  </section>
+
+  <footer>
+  <div class="redes-sociales">
+    <a href="https://instagram.com" target="_blank">📸 Instagram</a> |
+    <a href="https://facebook.com" target="_blank">📘 Facebook</a> |
+    <a href="https://wa.me/521XXXXXXXXXX" target="_blank">💬 WhatsApp</a>
+  </div>
+ </footer>
+
+
+  <!-- JavaScript aquí -->
+ <script>
+  let contador = 0;
+  const carrito = [];
+  const productos = [
+    { nombre: "Collar Mariposa", precio: 320 },
+    { nombre: "Aros Doble Anillo", precio: 270 },
+    { nombre: "Pulsera Delicada", precio: 290 }
+  ];
+
+  function agregarAlCarrito(index) {
+  const producto = productos[index];
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.push(producto);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  actualizarContador();
+  mostrarCarrito();
+ }
+
+ function actualizarContador() {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  document.getElementById("contador-carrito").innerText = carrito.length;
+ }
+ 
+ function mostrarCarrito() {
+  const lista = document.getElementById("lista-carrito");
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  let suma = 0;
+  lista.innerHTML = "";
+
+  carrito.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} - $${item.precio} MXN`;
+
+    const btnEliminar = document.createElement("button");
+    btnEliminar.textContent = "❌";
+    btnEliminar.onclick = () => {
+      carrito.splice(index, 1);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      actualizarContador();
+      mostrarCarrito();
+    };
+
+    li.appendChild(btnEliminar);
+    lista.appendChild(li);
+    suma += item.precio;
+  });
+
+  const totalEl = document.getElementById("total-carrito");
+  if (totalEl) {
+    totalEl.textContent = `Total: $${suma} MXN`;
+  } else {
+    const nuevoTotal = document.createElement("p");
+    nuevoTotal.id = "total-carrito";
+    nuevoTotal.textContent = `Total: $${suma} MXN`;
+    document.getElementById("carrito-modal").appendChild(nuevoTotal);
+  }
+
+  document.getElementById("carrito-modal").classList.remove("oculto");
+ }
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const iconoCarrito = document.getElementById("icono-carrito");
+    const modal = document.getElementById("carrito-modal");
+    const btnPago = document.querySelector(".boton-pago");
+    const seccionPago = document.getElementById("pago");
+
+    if (iconoCarrito) {
+      iconoCarrito.addEventListener("click", () => {
+        modal.classList.toggle("oculto");
+      });
+    }
+
+    if (btnPago && seccionPago) {
+      btnPago.addEventListener("click", (e) => {
+        e.preventDefault();
+        seccionPago.classList.remove("oculto");
+        seccionPago.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  });
+ </script>
+
+
+   <div id="carrito-modal" class="carrito-modal oculto">
+  <h3>Tu carrito</h3>
+  <ul id="lista-carrito"></ul>
+  <a href="pago.html" class="boton-pago">Ir a métodos de pago</a>
+ </div>
+  
+ <a href="https://wa.me/521XXXXXXXXXX" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+  💬
+ </a>
+
+ 
+</body>
+</html>
+
