@@ -1,189 +1,34 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teka Accesorios</title>
-
-  <!-- Estilos CSS -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
-    <div class="logo">Teka<span>Accesorios</span></div>
+    <h1>TekaAccesorios</h1>
     <nav>
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#resenas">Reseñas</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-        
-
-      </ul>
+      <a href="#"><img src="img/search-icon.png" alt="Buscar" width="24"></a>
+      <a href="#"><img src="img/cart-icon.png" alt="Carrito" width="24"></a>
+      <a href="#"><img src="img/user-icon.png" alt="Perfil" width="24"></a>
     </nav>
-
-    <div class="icons" id="icono-carrito">
-      <img src="img/search-icon.png" alt="Buscar" />
-      <div class="carrito-icono"> 
-        <img src="img/cart-icon.png" alt="Carrito" />
-        <span id="contador-carrito">0</span>
-      </div>
-      <img src="img/user-icon.png" alt="Perfil" />
-    </div>
   </header>
 
-  <section class="hero" id="inicio">
-    <div class="texto">
-      <h1>Bienvenidos</h1>
-      <p><span>TekaAccesorios</span><br />Encuentra accesorios únicos como tú</p>
-    </div>
-  </section>
+  <main>
+    <section class="hero">
+      <img src="img/joyas1.png" alt="Joyas de oro elegantes" style="width: 100%; max-width: 1000px; display: block; margin: 20px auto; border-radius: 12px;">
+    </section>
 
-  <section class="catalogo" id="productos">
-    <h2>Catálogo</h2>
-    <div class="galeria">
-      <div class="producto">
-        <img src="img/joya1.jpg" alt="Collar Mariposa" />
-        <h3>Collar Mariposa</h3>
-        <p>$320 MXN</p>
-        <button onclick="agregarAlCarrito(0)">Agregar al carrito</button>
-      </div>
-      <div class="producto">
-        <img src="img/joya2.jpg" alt="Aros Doble Anillo" />
-        <h3>Aros Doble Anillo</h3>
-        <p>$270 MXN</p>
-        <button onclick="agregarAlCarrito(1)">Agregar al carrito</button>
-      </div>
-      <div class="producto">
-        <img src="img/joya3.jpg" alt="Pulsera Delicada" />
-        <h3>Pulsera Delicada</h3>
-        <p>$290 MXN</p>
-        <button onclick="agregarAlCarrito(2)">Agregar al carrito</button>
-      </div>
-    </div>
-  </section>
+    <section>
+      <h2>Bienvenidos</h2>
+      <p>Encuentra accesorios únicos como tú.</p>
+    </section>
+  </main>
 
-  <section class="resenas" id="resenas">
-    <h2>Lo que dicen nuestras clientas</h2>
-    <div class="opiniones">
-      <blockquote>“Amé mi collar mariposa, la calidad es increíble ❤️”</blockquote>
-      <blockquote>“Entrega rápida y atención hermosa. Recomendadísimos.”</blockquote>
-    </div>
-  </section>
-
-  <footer>
-  <div class="redes-sociales">
-    <a href="https://instagram.com" target="_blank">📸 Instagram</a> |
-    <a href="https://facebook.com" target="_blank">📘 Facebook</a> |
-    <a href="https://wa.me/521XXXXXXXXXX" target="_blank">💬 WhatsApp</a>
-  </div>
- </footer>
-
-
-  <!-- JavaScript aquí -->
- <script>
-  let contador = 0;
-  const carrito = [];
-  const productos = [
-    { nombre: "Collar Mariposa", precio: 320 },
-    { nombre: "Aros Doble Anillo", precio: 270 },
-    { nombre: "Pulsera Delicada", precio: 290 }
-  ];
-
-  function agregarAlCarrito(index) {
-  const producto = productos[index];
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  carrito.push(producto);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-
-  actualizarContador();
-  mostrarCarrito();
- }
-
- function actualizarContador() {
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  document.getElementById("contador-carrito").innerText = carrito.length;
- }
- 
- function mostrarCarrito() {
-  const lista = document.getElementById("lista-carrito");
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  let suma = 0;
-  lista.innerHTML = "";
-
-  carrito.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${item.nombre} - $${item.precio} MXN`;
-
-    const btnEliminar = document.createElement("button");
-    btnEliminar.textContent = "❌";
-    btnEliminar.onclick = () => {
-      carrito.splice(index, 1);
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      actualizarContador();
-      mostrarCarrito();
-    };
-
-    li.appendChild(btnEliminar);
-    lista.appendChild(li);
-    suma += item.precio;
-  });
-
-  const totalEl = document.getElementById("total-carrito");
-  if (totalEl) {
-    totalEl.textContent = `Total: $${suma} MXN`;
-  } else {
-    const nuevoTotal = document.createElement("p");
-    nuevoTotal.id = "total-carrito";
-    nuevoTotal.textContent = `Total: $${suma} MXN`;
-    document.getElementById("carrito-modal").appendChild(nuevoTotal);
-  }
-
-  document.getElementById("carrito-modal").classList.remove("oculto");
- }
-
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const iconoCarrito = document.getElementById("icono-carrito");
-    const modal = document.getElementById("carrito-modal");
-    const btnPago = document.querySelector(".boton-pago");
-    const seccionPago = document.getElementById("pago");
-
-    if (iconoCarrito) {
-      iconoCarrito.addEventListener("click", () => {
-        modal.classList.toggle("oculto");
-      });
-    }
-
-    if (btnPago && seccionPago) {
-      btnPago.addEventListener("click", (e) => {
-        e.preventDefault();
-        seccionPago.classList.remove("oculto");
-        seccionPago.scrollIntoView({ behavior: "smooth" });
-      });
-    }
-  });
- </script>
-
-
-   <div id="carrito-modal" class="carrito-modal oculto">
-  <h3>Tu carrito</h3>
-  <ul id="lista-carrito"></ul>
-  <a href="pago.html" class="boton-pago">Ir a métodos de pago</a>
- </div>
-  
- <a href="https://wa.me/521XXXXXXXXXX" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
-  💬
- </a>
-
- 
+  <footer style="text-align:center; padding:20px; background:#fde4ef;">
+    © 2025 Teka Accesorios
+  </footer>
 </body>
 </html>
-
