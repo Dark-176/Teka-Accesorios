@@ -1,0 +1,354 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fdf6f2;
+  color: #333;
+}
+
+/* Encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.logo span {
+  color: #e397af;
+  font-weight: normal;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #e397af;
+}
+
+.icons img {
+  width: 22px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+/* HERO SECTION */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 100px 5%;
+  min-height: 100vh;
+  background-image: url("img/joyas1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #fdf6f2;
+  position: relative;
+  text-align: left;
+}
+
+
+/* Contenido de texto */
+.texto {
+ .texto {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+}
+
+.texto h1 {
+  font-size: 48px;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+}
+
+.texto p {
+  font-size: 18px;
+  color: #555;
+}
+
+.texto p span {
+  color: #e397af;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+footer {
+  background-color: #fce8ee;
+  text-align: center;
+  padding: 30px 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.catalogo {
+  padding: 80px 5%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.catalogo h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #e397af;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.producto {
+  background-color: #fffafc;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  width: 240px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.producto:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.producto img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.producto h3 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.producto p {
+  color: #e397af;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.btn-carrito {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e397af;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-carrito:hover {
+  background-color: #d27797;
+  transform: scale(1.05);
+}
+
+.carrito {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #e397af;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  z-index: 100;
+}
+
+.carrito-icono {
+  position: relative;
+  display: inline-block;
+}
+
+#contador-carrito {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: pink;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.carrito-modal {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 2px solid pink;
+  padding: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index: 999;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.carrito-modal.oculto {
+  display: none;
+}
+
+.boton-pago {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: pink;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.boton-pago:hover {
+  background-color: hotpink;
+}
+
+.oculto {
+  display: none;
+}
+
+
+.resenas {
+  padding: 80px 5%;
+  background-color: #fff7f9;
+  text-align: center;
+}
+
+.resenas h2 {
+  font-size: 32px;
+  color: #e397af;
+  margin-bottom: 30px;
+}
+
+.opiniones blockquote {
+  font-style: italic;
+  color: #444;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 10px;
+}
+
+
+.redes-sociales {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.redes-sociales a {
+  margin: 0 8px;
+  color: #e397af;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.redes-sociales a:hover {
+  color: #b95c86;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .texto {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .galeria {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .producto {
+    width: 90%;
+  }
+
+  .formulario-pago form,
+  .resumen-compra {
+    padding: 10px;
+  }
+
+  input, select, button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  font-size: 28px;
+  padding: 12px 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+
+
